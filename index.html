@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <!-- Grundinformationen für den Browser -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Titel oben im Browser-Tab -->
+  <title>Mini-Quiz-App</title>
+
+  <!-- Verbindung zur CSS-Datei -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Hauptbereich der Webseite -->
+  <main class="app">
+
+    <!-- Kopfbereich mit Titel und kurzer Erklärung -->
+    <header class="kopfbereich">
+      <p class="label">Mini-Projekt 3 abgeschlossen</p>
+
+      <h1>Mini-Quiz-App</h1>
+
+      <p class="beschreibung">
+        Eine kleine Quiz-App zum Üben von HTML, CSS und JavaScript.
+        In diesem Projekt schreiben wir Kommentare direkt in den Code.
+      </p>
+    </header>
+
+    <!-- Quiz-Karte in der Mitte -->
+    <section class="quiz-karte">
+
+      <!-- Fortschritt oben in der Karte -->
+      <div class="quiz-status">
+        <span id="frageStatus">Frage wird geladen ...</span>
+        <span id="punkteStatus">0 Punkte</span>
+      </div>
+
+      <!-- Bereich für die Frage oder später das Ergebnis -->
+      <div class="frage-bereich">
+        <p id="kategorieText" class="kleiner-hinweis">Kategorie</p>
+
+        <h2 id="frageText">Frage wird geladen ...</h2>
+      </div>
+
+      <!-- 
+        Bereich für die Antwortmöglichkeiten.
+        Die Buttons werden von JavaScript erstellt.
+      -->
+      <div class="antworten-bereich" id="antwortenBereich"></div>
+
+      <!-- Bereich für Rückmeldung und Steuerung -->
+      <div class="aktion-bereich">
+        <p id="meldung" class="meldung">
+          Wähle eine Antwort aus.
+        </p>
+
+        <button id="weiterButton" class="haupt-button" disabled>
+          Weiter
+        </button>
+      </div>
+
+    </section>
+
+    <!-- Kleine Abschlusszeile unter der App -->
+    <footer class="abschluss-box">
+      <p>Version 5 von 5 · Mini-Quiz-App fertig</p>
+    </footer>
+
+  </main>
+
+  <!-- Verbindung zur JavaScript-Datei -->
+  <script src="script.js"></script>
+</body>
+</html>
