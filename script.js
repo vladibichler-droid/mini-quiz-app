@@ -100,6 +100,13 @@ function fortschrittAktualisieren() {
 function highscoreAnzeigen() {
   highscoreStatus.textContent = `Highscore: ${highscore} Punkte`;
 }
+
+/*
+  Mischt die Reihenfolge der Fragen zufällig.
+*/
+function fragenMischen() {
+  quizFragen.sort(() => Math.random() - 0.5);
+}
 /*
   Diese Funktion zeigt eine Frage auf der Webseite an.
 */
@@ -280,6 +287,7 @@ weiterButton.addEventListener("click", function () {
   Beim Start der Webseite wird direkt die erste Frage angezeigt.
 */
 highscoreAnzeigen();
+fragenMischen();
 frageAnzeigen();
 /*
   Diese Ausgabe sieht man nur in der Entwicklerkonsole.
