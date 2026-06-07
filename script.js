@@ -15,6 +15,7 @@ const weiterButton = document.querySelector("#weiterButton");
 
 /*
   Hier speichern wir unsere Quizfragen.
+  Version 9 enthält insgesamt 15 Fragen.
 */
 const quizFragen = [
   {
@@ -71,6 +72,116 @@ const quizFragen = [
       "Damit Dateien verschwinden"
     ],
     richtigeAntwort: 0
+  },
+  {
+    kategorie: "HTML",
+    frage: "Was bedeutet ein HTML-Tag?",
+    antworten: [
+      "Ein Baustein, der dem Browser sagt, was ein Inhalt ist",
+      "Ein Passwort für GitHub",
+      "Ein Bildbearbeitungswerkzeug",
+      "Ein Stromkabel für den Computer"
+    ],
+    richtigeAntwort: 0
+  },
+  {
+    kategorie: "HTML",
+    frage: "Wofür verwendet man eine Überschrift wie h1?",
+    antworten: [
+      "Für die wichtigste Überschrift einer Seite",
+      "Für einen geheimen Login",
+      "Für das Löschen von Dateien",
+      "Für die Lautstärke des Computers"
+    ],
+    richtigeAntwort: 0
+  },
+  {
+    kategorie: "CSS",
+    frage: "Was macht die CSS-Eigenschaft color?",
+    antworten: [
+      "Sie verändert die Textfarbe",
+      "Sie speichert den Highscore",
+      "Sie startet JavaScript neu",
+      "Sie erstellt einen Git-Commit"
+    ],
+    richtigeAntwort: 0
+  },
+  {
+    kategorie: "CSS",
+    frage: "Was macht border-radius in CSS?",
+    antworten: [
+      "Es rundet Ecken ab",
+      "Es mischt Fragen zufällig",
+      "Es löscht einen Branch",
+      "Es lädt eine Webseite neu"
+    ],
+    richtigeAntwort: 0
+  },
+  {
+    kategorie: "JavaScript",
+    frage: "Was ist eine Variable?",
+    antworten: [
+      "Ein Speicherplatz für einen Wert",
+      "Ein Bild auf einer Webseite",
+      "Ein GitHub-Profilbild",
+      "Ein CSS-Hintergrund"
+    ],
+    richtigeAntwort: 0
+  },
+  {
+    kategorie: "JavaScript",
+    frage: "Was macht eine Funktion?",
+    antworten: [
+      "Sie sammelt Code, den man wiederverwenden kann",
+      "Sie formatiert automatisch den Monitor",
+      "Sie löscht alle Projekte",
+      "Sie ersetzt HTML"
+    ],
+    richtigeAntwort: 0
+  },
+  {
+    kategorie: "JavaScript",
+    frage: "Wofür benutzt man localStorage?",
+    antworten: [
+      "Um Daten im Browser zu speichern",
+      "Um den Bildschirm heller zu machen",
+      "Um ein WLAN-Passwort zu ändern",
+      "Um eine CSS-Datei zu löschen"
+    ],
+    richtigeAntwort: 0
+  },
+  {
+    kategorie: "GitHub",
+    frage: "Was ist ein Commit?",
+    antworten: [
+      "Ein gespeicherter Stand eines Projekts",
+      "Eine neue Schriftart",
+      "Ein Browser-Tab",
+      "Ein Bildfilter"
+    ],
+    richtigeAntwort: 0
+  },
+  {
+    kategorie: "GitHub",
+    frage: "Was ist ein Branch?",
+    antworten: [
+      "Ein eigener Arbeitszweig im Projekt",
+      "Ein fertiges Bild",
+      "Eine CSS-Farbe",
+      "Ein HTML-Button"
+    ],
+    richtigeAntwort: 0
+  },
+  {
+    kategorie: "GitHub",
+    frage: "Was ist ein Pull Request?",
+    antworten: [
+      "Ein Vorschlag, Änderungen in einen Branch zu übernehmen",
+      "Ein Passwort für den Computer",
+      "Ein automatischer Virenscanner",
+      "Ein neues Ladekabel"
+    ],
+    richtigeAntwort: 0
   }
 ];
 
@@ -94,6 +205,7 @@ function fortschrittAktualisieren() {
   fortschrittProzent.textContent = `${prozent}%`;
   fortschrittBalken.style.width = `${prozent}%`;
 }
+
 /*
   Diese Funktion aktualisiert die Highscore-Anzeige.
 */
@@ -107,6 +219,7 @@ function highscoreAnzeigen() {
 function fragenMischen() {
   quizFragen.sort(() => Math.random() - 0.5);
 }
+
 /*
   Diese Funktion zeigt eine Frage auf der Webseite an.
 */
@@ -117,13 +230,13 @@ function frageAnzeigen() {
   quizIstBeendet = false;
 
   frageStatus.textContent = `Frage ${aktuelleFrageIndex + 1} von ${quizFragen.length}`;
-punkteStatus.textContent = `${punkte} Punkte`;
+  punkteStatus.textContent = `${punkte} Punkte`;
 
-fortschrittAktualisieren();
-highscoreAnzeigen();
+  fortschrittAktualisieren();
+  highscoreAnzeigen();
 
-kategorieText.textContent = aktuelleFrage.kategorie;
-frageText.textContent = aktuelleFrage.frage;
+  kategorieText.textContent = aktuelleFrage.kategorie;
+  frageText.textContent = aktuelleFrage.frage;
 
   antwortenBereich.innerHTML = "";
 
@@ -202,17 +315,17 @@ function ergebnisAnzeigen() {
   quizIstBeendet = true;
 
   frageStatus.textContent = "Quiz abgeschlossen";
-punkteStatus.textContent = `${punkte} von ${quizFragen.length} Punkten`;
+  punkteStatus.textContent = `${punkte} von ${quizFragen.length} Punkten`;
 
-if (punkte > highscore) {
-  highscore = punkte;
-  localStorage.setItem("quizHighscore", highscore);
-}
+  if (punkte > highscore) {
+    highscore = punkte;
+    localStorage.setItem("quizHighscore", highscore);
+  }
 
-highscoreAnzeigen();
+  highscoreAnzeigen();
 
-fortschrittProzent.textContent = "100%";
-fortschrittBalken.style.width = "100%";
+  fortschrittProzent.textContent = "100%";
+  fortschrittBalken.style.width = "100%";
 
   kategorieText.textContent = "Ergebnis";
   frageText.textContent = "Dein Quiz-Ergebnis";
@@ -248,7 +361,11 @@ function ergebnisTextErstellen() {
     return "Sehr stark! Du hast alle Fragen richtig beantwortet.";
   }
 
-  if (punkte >= 3) {
+  if (punkte >= 10) {
+    return "Sehr gut! Du hast einen starken Überblick.";
+  }
+
+  if (punkte >= 6) {
     return "Gut gemacht! Du hast schon viel verstanden.";
   }
 
@@ -268,6 +385,7 @@ function quizNeuStarten() {
   frageWurdeBeantwortet = false;
   quizIstBeendet = false;
 
+  fragenMischen();
   frageAnzeigen();
 }
 
@@ -289,7 +407,8 @@ weiterButton.addEventListener("click", function () {
 highscoreAnzeigen();
 fragenMischen();
 frageAnzeigen();
+
 /*
   Diese Ausgabe sieht man nur in der Entwicklerkonsole.
 */
-console.log("Mini-Quiz-App Version 6A ist gestartet.");
+console.log("Mini-Quiz-App Version 9 ist gestartet.");
