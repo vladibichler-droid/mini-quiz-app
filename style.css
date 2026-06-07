@@ -355,3 +355,27 @@ h2 {
   );
   transition: width 0.3s ease;
 }
+
+/* ========================================
+   Version 6B – Highscore-Anzeige
+======================================== */
+
+#highscoreStatus {
+  color: #bbf7d0;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  border-radius: 999px;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .quiz-status {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #highscoreStatus {
+    width: fit-content;
+  }
+}

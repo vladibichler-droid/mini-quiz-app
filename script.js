@@ -4,6 +4,7 @@
 */
 const frageStatus = document.querySelector("#frageStatus");
 const punkteStatus = document.querySelector("#punkteStatus");
+const highscoreStatus = document.querySelector("#highscoreStatus");
 const fortschrittProzent = document.querySelector("#fortschrittProzent");
 const fortschrittBalken = document.querySelector("#fortschrittBalken");
 const kategorieText = document.querySelector("#kategorieText");
@@ -81,6 +82,8 @@ let punkte = 0;
 let frageWurdeBeantwortet = false;
 let quizIstBeendet = false;
 
+let highscore = Number(localStorage.getItem("quizHighscore")) || 0;
+
 /*
   Diese Funktion aktualisiert den Fortschrittsbalken.
 */
@@ -91,7 +94,12 @@ function fortschrittAktualisieren() {
   fortschrittProzent.textContent = `${prozent}%`;
   fortschrittBalken.style.width = `${prozent}%`;
 }
-
+/*
+  Diese Funktion aktualisiert die Highscore-Anzeige.
+*/
+function highscoreAnzeigen() {
+  highscoreStatus.textContent = `Highscore: ${highscore} Punkte`;
+}
 /*
   Diese Funktion zeigt eine Frage auf der Webseite an.
 */
@@ -102,12 +110,13 @@ function frageAnzeigen() {
   quizIstBeendet = false;
 
   frageStatus.textContent = `Frage ${aktuelleFrageIndex + 1} von ${quizFragen.length}`;
-  punkteStatus.textContent = `${punkte} Punkte`;
+punkteStatus.textContent = `${punkte} Punkte`;
 
-  fortschrittAktualisieren();
+fortschrittAktualisieren();
+highscoreAnzeigen();
 
-  kategorieText.textContent = aktuelleFrage.kategorie;
-  frageText.textContent = aktuelleFrage.frage;
+kategorieText.textContent = aktuelleFrage.kategorie;
+frageText.textContent = aktuelleFrage.frage;
 
   antwortenBereich.innerHTML = "";
 
@@ -186,10 +195,17 @@ function ergebnisAnzeigen() {
   quizIstBeendet = true;
 
   frageStatus.textContent = "Quiz abgeschlossen";
-  punkteStatus.textContent = `${punkte} von ${quizFragen.length} Punkten`;
+punkteStatus.textContent = `${punkte} von ${quizFragen.length} Punkten`;
 
-  fortschrittProzent.textContent = "100%";
-  fortschrittBalken.style.width = "100%";
+if (punkte > highscore) {
+  highscore = punkte;
+  localStorage.setItem("quizHighscore", highscore);
+}
+
+highscoreAnzeigen();
+
+fortschrittProzent.textContent = "100%";
+fortschrittBalken.style.width = "100%";
 
   kategorieText.textContent = "Ergebnis";
   frageText.textContent = "Dein Quiz-Ergebnis";
@@ -263,8 +279,8 @@ weiterButton.addEventListener("click", function () {
 /*
   Beim Start der Webseite wird direkt die erste Frage angezeigt.
 */
+highscoreAnzeigen();
 frageAnzeigen();
-
 /*
   Diese Ausgabe sieht man nur in der Entwicklerkonsole.
 */
