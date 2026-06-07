@@ -4,6 +4,8 @@
 */
 const frageStatus = document.querySelector("#frageStatus");
 const punkteStatus = document.querySelector("#punkteStatus");
+const fortschrittProzent = document.querySelector("#fortschrittProzent");
+const fortschrittBalken = document.querySelector("#fortschrittBalken");
 const kategorieText = document.querySelector("#kategorieText");
 const frageText = document.querySelector("#frageText");
 const antwortenBereich = document.querySelector("#antwortenBereich");
@@ -12,8 +14,6 @@ const weiterButton = document.querySelector("#weiterButton");
 
 /*
   Hier speichern wir unsere Quizfragen.
-  Ein Array ist eine Liste.
-  In dieser Liste liegen mehrere Frage-Objekte.
 */
 const quizFragen = [
   {
@@ -82,6 +82,17 @@ let frageWurdeBeantwortet = false;
 let quizIstBeendet = false;
 
 /*
+  Diese Funktion aktualisiert den Fortschrittsbalken.
+*/
+function fortschrittAktualisieren() {
+  const aktuelleFragenNummer = aktuelleFrageIndex + 1;
+  const prozent = Math.round((aktuelleFragenNummer / quizFragen.length) * 100);
+
+  fortschrittProzent.textContent = `${prozent}%`;
+  fortschrittBalken.style.width = `${prozent}%`;
+}
+
+/*
   Diese Funktion zeigt eine Frage auf der Webseite an.
 */
 function frageAnzeigen() {
@@ -93,28 +104,18 @@ function frageAnzeigen() {
   frageStatus.textContent = `Frage ${aktuelleFrageIndex + 1} von ${quizFragen.length}`;
   punkteStatus.textContent = `${punkte} Punkte`;
 
+  fortschrittAktualisieren();
+
   kategorieText.textContent = aktuelleFrage.kategorie;
   frageText.textContent = aktuelleFrage.frage;
 
-  /*
-    Vor dem Erstellen neuer Antwort-Buttons leeren wir den Bereich.
-    Sonst würden alte Buttons stehen bleiben.
-  */
   antwortenBereich.innerHTML = "";
 
-  /*
-    Für jede Antwort erstellen wir einen eigenen Button.
-    Der index sagt uns, ob es Antwort 0, 1, 2 oder 3 ist.
-  */
   aktuelleFrage.antworten.forEach(function (antwort, index) {
     const antwortButton = document.createElement("button");
 
     antwortButton.textContent = antwort;
 
-    /*
-      Beim Klick auf eine Antwort wird geprüft,
-      ob diese Antwort richtig oder falsch ist.
-    */
     antwortButton.addEventListener("click", function () {
       antwortPruefen(index);
     });
@@ -122,10 +123,6 @@ function frageAnzeigen() {
     antwortenBereich.appendChild(antwortButton);
   });
 
-  /*
-    Der Weiter-Button ist erst gesperrt.
-    Er wird erst aktiv, wenn eine Antwort angeklickt wurde.
-  */
   weiterButton.disabled = true;
   weiterButton.textContent = "Weiter";
 
@@ -136,10 +133,6 @@ function frageAnzeigen() {
   Diese Funktion prüft die angeklickte Antwort.
 */
 function antwortPruefen(gewaehlteAntwort) {
-  /*
-    Falls schon geantwortet wurde, stoppen wir die Funktion.
-    Dadurch kann man nicht zweimal Punkte bekommen.
-  */
   if (frageWurdeBeantwortet === true) {
     return;
   }
@@ -149,45 +142,23 @@ function antwortPruefen(gewaehlteAntwort) {
   const aktuelleFrage = quizFragen[aktuelleFrageIndex];
   const alleAntwortButtons = antwortenBereich.querySelectorAll("button");
 
-  /*
-    Nach dem ersten Klick werden alle Antwortbuttons gesperrt.
-    So kann man nicht mehrfach antworten.
-  */
   alleAntwortButtons.forEach(function (button) {
     button.disabled = true;
   });
 
-  /*
-    Die richtige Antwort wird immer grün markiert.
-  */
   alleAntwortButtons[aktuelleFrage.richtigeAntwort].classList.add("richtig");
 
-  /*
-    Wenn die gewählte Antwort richtig ist,
-    bekommt der Nutzer einen Punkt.
-  */
   if (gewaehlteAntwort === aktuelleFrage.richtigeAntwort) {
     punkte = punkte + 1;
     punkteStatus.textContent = `${punkte} Punkte`;
     meldung.textContent = "Richtig! Du bekommst 1 Punkt.";
   } else {
-    /*
-      Wenn die gewählte Antwort falsch ist,
-      wird sie rot markiert.
-    */
     alleAntwortButtons[gewaehlteAntwort].classList.add("falsch");
     meldung.textContent = "Nicht ganz. Die grüne Antwort wäre richtig gewesen.";
   }
 
-  /*
-    Nach einer Antwort wird der Weiter-Button aktiviert.
-  */
   weiterButton.disabled = false;
 
-  /*
-    Wenn es noch weitere Fragen gibt, steht dort „Nächste Frage“.
-    Bei der letzten Frage steht dort „Ergebnis anzeigen“.
-  */
   if (aktuelleFrageIndex < quizFragen.length - 1) {
     weiterButton.textContent = "Nächste Frage";
   } else {
@@ -199,19 +170,12 @@ function antwortPruefen(gewaehlteAntwort) {
   Diese Funktion lädt die nächste Frage.
 */
 function naechsteFrageAnzeigen() {
-  /*
-    Nur weitermachen, wenn es wirklich noch eine nächste Frage gibt.
-  */
   if (aktuelleFrageIndex < quizFragen.length - 1) {
     aktuelleFrageIndex = aktuelleFrageIndex + 1;
     frageAnzeigen();
     return;
   }
 
-  /*
-    Wenn keine nächste Frage mehr da ist,
-    zeigen wir das Ergebnis an.
-  */
   ergebnisAnzeigen();
 }
 
@@ -224,13 +188,12 @@ function ergebnisAnzeigen() {
   frageStatus.textContent = "Quiz abgeschlossen";
   punkteStatus.textContent = `${punkte} von ${quizFragen.length} Punkten`;
 
+  fortschrittProzent.textContent = "100%";
+  fortschrittBalken.style.width = "100%";
+
   kategorieText.textContent = "Ergebnis";
   frageText.textContent = "Dein Quiz-Ergebnis";
 
-  /*
-    Die Antwortbuttons werden entfernt.
-    Stattdessen zeigen wir eine Ergebnisbox.
-  */
   antwortenBereich.innerHTML = "";
 
   const ergebnisBox = document.createElement("div");
@@ -286,9 +249,7 @@ function quizNeuStarten() {
 }
 
 /*
-  Beim Klick auf den Button passiert je nach Zustand etwas anderes:
-  - während des Quiz: nächste Frage anzeigen
-  - nach dem Ergebnis: Quiz neu starten
+  Beim Klick auf den Button passiert je nach Zustand etwas anderes.
 */
 weiterButton.addEventListener("click", function () {
   if (quizIstBeendet === true) {
@@ -307,4 +268,4 @@ frageAnzeigen();
 /*
   Diese Ausgabe sieht man nur in der Entwicklerkonsole.
 */
-console.log("Mini-Quiz-App Version 5 ist gestartet.");
+console.log("Mini-Quiz-App Version 6A ist gestartet.");
