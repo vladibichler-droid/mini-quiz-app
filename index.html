@@ -18,13 +18,13 @@
 
     <!-- Kopfbereich mit Titel und kurzer Erklärung -->
     <header class="kopfbereich">
-      <p class="label">Mini-Projekt 3 abgeschlossen</p>
+      <p class="label">Mini Quiz App 2.0</p>
 
       <h1>Mini-Quiz-App</h1>
 
       <p class="beschreibung">
         Eine kleine Quiz-App zum Üben von HTML, CSS und JavaScript.
-        In diesem Projekt schreiben wir Kommentare direkt in den Code.
+        Jetzt mit Fortschrittsanzeige für einen besseren Überblick.
       </p>
     </header>
 
@@ -35,6 +35,18 @@
       <div class="quiz-status">
         <span id="frageStatus">Frage wird geladen ...</span>
         <span id="punkteStatus">0 Punkte</span>
+      </div>
+
+      <!-- Neuer Fortschrittsbalken -->
+      <div class="fortschritt-bereich" aria-label="Quiz-Fortschritt">
+        <div class="fortschritt-info">
+          <span>Fortschritt</span>
+          <span id="fortschrittProzent">0%</span>
+        </div>
+
+        <div class="fortschritt-leiste">
+          <div id="fortschrittBalken" class="fortschritt-balken"></div>
+        </div>
       </div>
 
       <!-- Bereich für die Frage oder später das Ergebnis -->
@@ -65,7 +77,7 @@
 
     <!-- Kleine Abschlusszeile unter der App -->
     <footer class="abschluss-box">
-      <p>Version 5 von 5 · Mini-Quiz-App fertig</p>
+      <p>Version 6A · Fortschrittsbalken hinzugefügt</p>
     </footer>
 
   </main>

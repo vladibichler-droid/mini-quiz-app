@@ -318,3 +318,40 @@ h2 {
     width: 100%;
   }
 }
+
+/* ========================================
+   Version 6A – Fortschrittsbalken
+======================================== */
+
+.fortschritt-bereich {
+  margin-bottom: 24px;
+}
+
+.fortschritt-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: #cbd5e1;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.fortschritt-leiste {
+  width: 100%;
+  height: 12px;
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.fortschritt-balken {
+  width: 0%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    #3b82f6,
+    #7c3aed
+  );
+  transition: width 0.3s ease;
+}
